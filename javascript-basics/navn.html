@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form>
+        Navn: 
+        <input type="text" id="navn"> <br>
+        Alder:
+        <input type="number" id="alder"><br>
+        <button id="knapp1">OK</button>
+
+
+    </form>
+
+<script>
+    let navn = document.querySelector("#navn");
+    let alder = document.querySelector("#alder");
+    let knapp = document.querySelector("#knapp1");
+
+    knapp.addEventListener("click", skrivUt);
+
+    function skrivUt(){
+        document.write(`Hei ${navn.value}. Du er ${alder} år gammel.`);
+    }
+
+</script>
+</body>
+</html>
