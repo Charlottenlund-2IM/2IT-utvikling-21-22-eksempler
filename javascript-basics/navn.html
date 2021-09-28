@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    <form>
+    
         Navn: 
         <input type="text" id="navn"> <br>
         Alder:
@@ -15,7 +15,9 @@
         <button id="knapp1">OK</button>
 
 
-    </form>
+  
+
+    <div id="utskrift"></div>
 
 <script>
     let navn = document.querySelector("#navn");
@@ -25,7 +27,7 @@
     knapp.addEventListener("click", skrivUt);
 
     function skrivUt(){
-        document.write(`Hei ${navn.value}. Du er ${alder} år gammel.`);
+        document.querySelector("#utskrift").innerHTML = `Hei ${navn.value}. Du er ${alder.value} år gammel.`;
     }
 
 </script>
