@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator</title>
+</head>
+<body>
+    <input type="number" id="tall1" placeholder="Skriv inn et tall"><br>
+<select name="regneart" id="regneart">
+    <option>Velg regneart</option>
+    <option value="pluss">+</option>
+    <option value="minus">-</option>
+    <option value="gange">*</option>
+    <option value="dele">/</option>
+    <option value="modulo">%</option>
+</select><br>
+    <input type="number" id="tall2" placeholder="Skriv inn et tall"><br>
+    <button id="regnUt">Regn ut</button>
+    <div id="svarUt"></div>
+
+    <script>
+        let utskrift = document.querySelector("#svarUt");
+        let knapp = document.querySelector("#regnUt");
+        knapp.addEventListener("click", regnUt);
+
+
+        function regnUt(){
+            let tall1 = Number(document.querySelector("#tall1").value);
+            let tall2 = Number(document.querySelector("#tall2").value);
+            let regneart = document.querySelector("#regneart").value;
+
+            if(regneart == "pluss"){
+                utskrift.innerHTML = tall1 + tall2;
+            }
+            if(regneart == "minus"){
+                utskrift.innerHTML = tall1 - tall 2;
+            }
+        }
+    </script>
+</body>
+</html>
