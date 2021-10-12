@@ -22,6 +22,7 @@ function setDivTab(arr){
             
         }
     }
+    console.log(arr);
     return arr;
 }
 
@@ -38,16 +39,17 @@ function printDivTab(arr){
         <th>10</th>`);
     for(let i = 0; i<arr.length; i++){
         document.write(`<tr><th>${i+1}</th>`)
-        for(let j = 0; j<arr.length;j++){
+        for(let j = 0; j<arr[i].length;j++){
             document.write(`<td>${arr[i][j].toFixed(2)} </td>`);
         }
         document.write(`<tr>`)
     }
     document.write(`</table>`)
+    
 }
 
-divTab = setDivTab(divTab);
-printDivTab(divTab);
+
+printDivTab(setDivTab(divTab));
 
 </script>
 </body>
