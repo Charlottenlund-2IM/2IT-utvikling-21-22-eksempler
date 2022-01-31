@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="utskrift"></div>
+
+
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.3/firebase-app.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+        import { getFirestore, collection, doc, addDoc, setDoc, getDoc, getDocs, query, where, orderBy, startAt, startAfter, endAt, limit, limitToLast } from "https://www.gstatic.com/firebasejs/9.6.3/firebase-firestore.js"
+
+      
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyB769kvK-RwVKxfPWKrnac6x6C3UwG58eU",
+          authDomain: "elevliste.firebaseapp.com",
+          projectId: "elevliste",
+          storageBucket: "elevliste.appspot.com",
+          messagingSenderId: "866578548801",
+          appId: "1:866578548801:web:eb58367f7d47865d025ec0"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+
+        const db = getFirestore();
+
+
+        const divUtskrift = document.querySelector("#utskrift");
+
+/*
+
+
+        await addDoc(collection(db, "hotellrom"), {
+            romnr: 101,
+            etasje: 1,
+            type: "Enkeltrom",
+            antSenger: 2,
+            ledig: true
+        })
+        await addDoc(collection(db, "hotellrom"), {
+            romnr: 102,
+            etasje: 1,
+            type: "Dobbeltrom",
+            antSenger: 3,
+            ledig: false
+        })
+        await addDoc(collection(db, "hotellrom"), {
+            romnr: 201,
+            etasje: 2,
+            type: "Enkeltrom",
+            antSenger: 2,
+            ledig: false
+        })
+        await addDoc(collection(db, "hotellrom"), {
+            romnr: 202,
+            etasje: 2,
+            type: "Dobbeltrom",
+            antSenger: 4,
+            ledig: true
+        })
+        await addDoc(collection(db, "hotellrom"), {
+            romnr: 301,
+            etasje: 3,
+            type: "suite",
+            antSenger: 6,
+            ledig: true
+        })
+        */
+
+        const q1 = query(collection(db, "hotellrom"));
+
+        const querySnapshot1 = await getDocs(q1);
+        divUtskrift.innerHTML += `<h1>Alle rom:</h1>`;
+        querySnapshot1.forEach((doc) => {
+            divUtskrift.innerHTML += 
+            `Romnr: ${doc.data().romnr}<br>
+            Etasje: ${doc.data().etasje}<br>
+            Romtype: ${doc.data().type}<br>
+            Antall sengeplasser: ${doc.data().antSenger}<br>
+            Ledig: ${doc.data().ledig}<br><br>`
+
+        })
+
+        const q2 = query(collection(db, "hotellrom"), where("etasje", "==", 1));
+        const querySnapshot2 = await getDocs(q2);
+        divUtskrift.innerHTML += `<h1>Alle rom i 1. etasje</h1>`;
+        querySnapshot2.forEach((doc) => {
+            divUtskrift.innerHTML += 
+            `Romnr: ${doc.data().romnr}<br>
+            Etasje: ${doc.data().etasje}<br>
+            Romtype: ${doc.data().type}<br>
+            Antall sengeplasser: ${doc.data().antSenger}<br>
+            Ledig: ${doc.data().ledig}<br><br>`
+        })
+
+        const q3 = query(collection(db, "hotellrom"), where("antSenger", ">", 2), orderBy("antSenger"));
+        const querySnapshot3 = await getDocs(q3);
+        divUtskrift.innerHTML += `<h1>Rom med mer enn 2 sengeplasser:</h1>`;
+        querySnapshot3.forEach((doc) => {
+            divUtskrift.innerHTML += 
+            `Romnr: ${doc.data().romnr}<br>
+            Etasje: ${doc.data().etasje}<br>
+            Romtype: ${doc.data().type}<br>
+            Antall sengeplasser: ${doc.data().antSenger}<br>
+            Ledig: ${doc.data().ledig}<br><br>`
+        })
+
+        const q5 = query(collection(db, "hotellrom"), where("type", "==", "suite"), where("ledig", "==", true));
+        const querySnapshot5 = await getDocs(q5);
+        divUtskrift.innerHTML += `<h1>Ledige suiter</h1>`;
+        querySnapshot5.forEach((doc) => {
+            divUtskrift.innerHTML += 
+            `Romnr: ${doc.data().romnr}<br>
+            Etasje: ${doc.data().etasje}<br>
+            Romtype: ${doc.data().type}<br>
+            Antall sengeplasser: ${doc.data().antSenger}<br>
+            Ledig: ${doc.data().ledig}<br><br>`
+        })
+
+
+
+
+      </script>
+</body>
+</html>

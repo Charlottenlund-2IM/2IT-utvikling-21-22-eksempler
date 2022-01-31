@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.2/firebase-app.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+        import { getDatabase, ref, get, child, set, onValue, query, orderByKey, orderByChild, orderByValue, limitToLast, equalTo } from "https://www.gstatic.com/firebasejs/9.6.2/firebase-database.js";
+    
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyB769kvK-RwVKxfPWKrnac6x6C3UwG58eU",
+          authDomain: "elevliste.firebaseapp.com",
+          projectId: "elevliste",
+          storageBucket: "elevliste.appspot.com",
+          messagingSenderId: "866578548801",
+          appId: "1:866578548801:web:eb58367f7d47865d025ec0",
+          databaseURL: "https://elevliste-default-rtdb.europe-west1.firebasedatabase.app/"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        // Get a reference to the database service
+        const db = getDatabase(app);
+
+
+
+
+        function leggInnElev(elevID, etternavn, fornavn, epost, telefon){
+          set(ref(db, "elever/" + elevID), {
+            fornavn: fornavn,
+            etternavn: etternavn,
+            epost: epost,
+            telefon: telefon
+          })
+          elevID++;
+        }
+
+        leggInnElev(0, "Thomasen", "Rebecca", "", "12345678");
+        leggInnElev(1, "Mo", "Isa", "isamo@mo.no", "23456789");
+        leggInnElev(2, "Nilsen", "Jakob", "jakob@nilsen.net", "");
+        leggInnElev(3, "Martin", "Gabrielle", "", "45678901");
+        
+
+
+      onValue(ref(db, "elever"), (snapshot) => {
+        console.log("*SKRIV UT ALLE*")
+        snapshot.forEach((childSnapshot) => {
+          console.log(childSnapshot.key);
+          console.log(childSnapshot.val().fornavn);
+          console.log(childSnapshot.val().etternavn);
+          console.log(childSnapshot.val().telefon);
+          
+        });  
+        console.log("**********");
+        })
+
+        onValue(query(ref(db, "elever/"), orderByChild("etternavn")), (snapshot) => {
+          console.log("*ORDER BY CHILD (ETTERNAVN)*");
+          snapshot.forEach((childSnapshot) => {
+          console.log(childSnapshot.key);
+          console.log(childSnapshot.val().fornavn);
+          console.log(childSnapshot.val().etternavn);
+          console.log(childSnapshot.val().telefon);
+          
+          });
+          console.log("************");
+        });
+
+        
+
+        onValue(query(ref(db, "elever/"), limitToLast(2)), (snapshot) => {
+          console.log("*LIMIT TO LAST*");
+          snapshot.forEach((childSnapshot) => {
+          console.log(childSnapshot.key);
+          console.log(childSnapshot.val().fornavn);
+          console.log(childSnapshot.val().etternavn);
+          console.log(childSnapshot.val().telefon);
+          });
+          console.log("************");
+        });
+
+        onValue(query(ref(db, "elever/"), orderByChild("etternavn"), equalTo("Mo")), (snapshot) => {
+          console.log("*EQUAL TO (MO)*");
+          snapshot.forEach((childSnapshot) => {
+          console.log(childSnapshot.key);
+          console.log(childSnapshot.val().fornavn);
+          console.log(childSnapshot.val().etternavn);
+          console.log(childSnapshot.val().telefon);
+          });
+          console.log("************");
+        });
+        
+
+      </script>
+</body>
+</html>

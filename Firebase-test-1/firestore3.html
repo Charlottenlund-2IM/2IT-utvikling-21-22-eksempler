@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <form>
+        <center>
+        Fornavn:
+        <input type="text" id="fornavn"><br><br>
+        Etternavn:
+        <input type="text" id="etternavn"><br><br>
+        Epost:
+        <input type="text" id="epost"><br><br>
+        Telefonnummer:
+        <input type="text" id="telefonnummer"><br><br>
+        <input type="button" value="Enter" id="enter"><br>
+        </center>
+    </form>
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.3/firebase-app.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+        import { getFirestore, addDoc, collection } from "https://www.gstatic.com/firebasejs/9.6.3/firebase-firestore.js"
+      
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyCvl_GfTpiJ7M_h2uK6NLIFetXOPb0cY9k",
+          authDomain: "elevliste-ff79e.firebaseapp.com",
+          projectId: "elevliste-ff79e",
+          storageBucket: "elevliste-ff79e.appspot.com",
+          messagingSenderId: "685271376287",
+          appId: "1:685271376287:web:c83b485fab17c4bf195daa"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore();
+        
+          let elevID = 0;
+
+        let knapp = document.querySelector("#enter");
+        knapp.addEventListener("click", await LeggInnElev);
+
+
+        async function LeggInnElev(){
+        let fornavn = document.querySelector("#fornavn").value;
+        let etternavn = document.querySelector("#etternavn").value;
+        let epost = document.querySelector("#epost").value;
+        let telefonnummer = document.querySelector("#telefonnummer").value;
+
+        await addDoc(collection(db, "elever"), {
+        etternavn: etternavn,
+        fornavn: fornavn,
+        epost: epost,
+        telefonnummer: telefonnummer
+        });
+        ElevID++;
+        }
+      </script> 
+</body>
+</html>

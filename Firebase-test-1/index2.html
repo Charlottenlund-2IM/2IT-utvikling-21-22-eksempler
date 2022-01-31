@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="users">
+        <ul id="userList">
+
+        </ul>
+    </div>
+    
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+    import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+    
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyB8epESVpcK5w2-kLb_upBcYu3ONrJVN2M",
+        authDomain: "it-firebase-test-9d0d0.firebaseapp.com",
+        projectId: "it-firebase-test-9d0d0",
+        storageBucket: "it-firebase-test-9d0d0.appspot.com",
+        messagingSenderId: "459408260315",
+        appId: "1:459408260315:web:7a80f401f3f894476d20fe",
+        databaseURL: "https://it-firebase-test-9d0d0-default-rtdb.europe-west1.firebasedatabase.app/",
+       
+    };
+    
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+
+    // Get a reference to the database service
+    const db = getDatabase(app);
+
+    let userId = 0;
+
+    function writeUserData(name, email, imageUrl) {
+  
+        set(ref(db, 'users/' + userId), {
+        username: name,
+        email: email,
+        profile_picture : imageUrl
+        
+  });
+  userId++;
+}
+
+writeUserData("Karl Arne", "karda@trondelagfylke.no", "https://backends.it.ntnu.no/user-profile-service/rest/files/3ec3b07f-31ad-3b7c-8549-65a042ff48f3");
+writeUserData("Carmen Dalsaune", "carm1dalsaune@gmail.com", "http://google.com");
+writeUserData("Theodor Dalsaune", "theodor.sokrates@icloud.com", "#")
+
+const userRef = ref(db, "users/");
+onValue(userRef, (snapshot) => {
+    const data = snapshot.val();
+    console.log(data);
+    for(const user in data){
+        const listicle = document.createElement("li");
+        listicle.innerHTML = `${data[user].username}, ${data[user].email}`;
+        document.querySelector("#userList").appendChild(listicle);
+
+    }
+    
+})
+
+    </script>
+</body>
+</html>
